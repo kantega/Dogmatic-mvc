@@ -1,0 +1,15 @@
+#section("content")
+
+
+<h1>No tests?</h1>
+<p>
+We're sorry, but Dogmatic just doesn't trust untested code.
+</p>
+<h2>How to fix?</h2>
+<p>
+    Please create a test class and add a <code>@TestWith<code> annotation on your handler method (${className}.${method})
+</p>
+    
+#end
+
+#parse("design.vm")

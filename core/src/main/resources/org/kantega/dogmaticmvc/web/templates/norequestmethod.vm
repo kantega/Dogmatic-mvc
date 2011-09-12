@@ -1,0 +1,12 @@
+#section("content")
+
+
+<h1>Your class has no @RequestHandler method</h1>
+<h2>How to fix?</h2>
+<p>
+   Please add the @RequestHandler annotation to excactly one method in ${className}
+</p>
+    
+#end
+
+#parse("design.vm")

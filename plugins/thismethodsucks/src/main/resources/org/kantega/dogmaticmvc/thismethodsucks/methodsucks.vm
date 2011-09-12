@@ -1,0 +1,15 @@
+#section("content")
+
+
+<h1>Your method sucks!</h1>
+<p>
+    Your method has a cyclomatic complexity of ${complexity}.
+</p>
+<h2>How to fix?</h2>
+<p>
+    Please clean up your code. Alternatively, be honest and annotate your method with @ThisMethodSucks.
+</p>
+    
+#end
+
+#parse("/org/kantega/dogmaticmvc/web/templates/design.vm")

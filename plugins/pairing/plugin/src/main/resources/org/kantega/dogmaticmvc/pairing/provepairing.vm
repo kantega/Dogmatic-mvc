@@ -1,0 +1,145 @@
+#section("head")
+
+<link rel="stylesheet" type="text/css" href="$root/pairing/history/history.css"/>
+<script src="$root/pairing/AC_OETags.js" language="javascript"></script>
+<script src="$root/pairing/history/history.js" language="javascript"></script>
+<script language="JavaScript" type="text/javascript">
+
+    var requiredMajorVersion = 9;
+    var requiredMinorVersion = 0;
+    var requiredRevision = 0;
+
+    function capture(button, id) {
+        var data = document.getElementById("pairing-capture").capture();
+        document.getElementById(id).value = data;
+        var buttonParent = button.parentNode;
+        buttonParent.removeChild(button)
+        var image = new Image();
+        image.src = "data:image/png;base64," +data
+        buttonParent.appendChild(image)
+
+        if(document.getElementById("a").value.length > 0 && document.getElementById("b").value.length > 0) {
+            document.getElementById("continue").style.display= "inline";
+        }
+
+    }
+</script>
+#end
+
+#section("content")
+
+
+<h1>So you're pair programming, right?</h1>
+<p>
+    Talk is cheap and so are annotations. Lots of people claim to be pair programming. We demand <em>hard evidence</em>!
+</p>
+
+<p>
+    Please capture a photo for each developer in the pair:
+</p>
+
+<table>
+    <tr>
+        <td>
+            <div style="border:1px solid black;">
+
+
+            <script language="JavaScript" type="text/javascript">
+                <!--
+                // Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
+                var hasProductInstall = DetectFlashVer(6, 0, 65);
+
+                // Version check based upon the values defined in globals
+                var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
+
+                if (hasProductInstall && !hasRequestedVersion) {
+                    // DO NOT MODIFY THE FOLLOWING FOUR LINES
+                    // Location visited after installation is complete if installation is required
+                    var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
+                    var MMredirectURL = window.location;
+                    document.title = document.title.slice(0, 47) + " - Flash Player Installation";
+                    var MMdoctitle = document.title;
+
+                    AC_FL_RunContent(
+                            "src", "$root/pairing/dogmatic-mvc-pairing-capture/playerProductInstall",
+                            "FlashVars", "MMredirectURL=" + MMredirectURL + '&MMplayerType=' + MMPlayerType + '&MMdoctitle=' + MMdoctitle + "",
+                            "width", "100%",
+                            "height", "100%",
+                            "align", "middle",
+                            "id", "dogmatic-capture",
+                            "quality", "high",
+                            "bgcolor", "#869ca7",
+                            "name", "dogmatic-capture",
+                            "allowScriptAccess", "sameDomain",
+                            "type", "application/x-shockwave-flash",
+                            "pluginspage", "http://www.adobe.com/go/getflashplayer",
+                            "allowFullScreen", "true"
+
+                            );
+                } else if (hasRequestedVersion) {
+                    // if we've detected an acceptable version
+                    // embed the Flash Content SWF when all tests are passed
+                    AC_FL_RunContent(
+                            "src", "$root/pairing/dogmatic-mvc-pairing-capture",
+                            "width", "320",
+                            "height", "240",
+                            "align", "middle",
+                            "id", "pairing-capture",
+                            "quality", "high",
+                            "bgcolor", "#869ca7",
+                            "name", "pairing-capture",
+                            "allowScriptAccess", "sameDomain",
+                            "type", "application/x-shockwave-flash",
+                            "pluginspage", "http://www.adobe.com/go/getflashplayer",
+                            "allowFullScreen", "true"
+
+                            );
+                } else {  // flash is too old or we can't detect the plugin
+                    var alternateContent = 'Alternate HTML content should be placed here. '
+                            + 'This content requires the Adobe Flash Player. '
+                            + '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
+                    document.write(alternateContent);  // insert non-flash content
+                }
+                // -->
+            </script>
+            <noscript>
+                <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                        id="dogmatic-capture" width="100%" height="100%"
+                        codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+                    <param name="movie" value="$root/pairing/dogmatic-mvc-pairing-capture.swf"/>
+                    <param name="quality" value="high"/>
+                    <param name="bgcolor" value="#869ca7"/>
+                    <param name="allowScriptAccess" value="sameDomain"/>
+                    <embed src="$root/pairing/dogmatic-mvc-pairing-capture.swf" quality="high" bgcolor="#869ca7"
+                           width="100%" height="100%" name="dogmatic-capture" align="middle"
+                           play="true"
+                           loop="false"
+                           quality="high"
+                           allowScriptAccess="sameDomain"
+                           type="application/x-shockwave-flash"
+                           pluginspage="http://www.adobe.com/go/getflashplayer">
+                    </embed>
+                </object>
+            </noscript>
+            </div>
+        </td>
+        <td style="width:320px; border:1px solid black; background-color:#d3d3d3;" align="center">
+            <button onclick="capture(this, 'a')">Capture programmer A</button>
+        </td>
+        <td style="width:320px;border:1px solid black; background-color:#d3d3d3;" align="center">
+            <button onclick="capture(this, 'b')">Capture programmer B</button>
+        </td>
+    </tr>
+</table>
+
+<p>
+<form action="$root/pairing/capture" method="POST">
+    <input type="hidden" name="servletPath" value="${servletPath}"/>
+    <input type="hidden" name="a" id="a">
+    <input type="hidden" name="b" id="b">
+    <input type="submit" name="continue" id="continue" value="Now Continue Programming" style="display:none">
+</form>
+</p>
+#end
+
+#parse("/org/kantega/dogmaticmvc/web/templates/design.vm")

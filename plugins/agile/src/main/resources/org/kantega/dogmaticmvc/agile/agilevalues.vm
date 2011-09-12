@@ -1,0 +1,157 @@
+#section("head")
+<script type="text/javascript" src="$root/jquery/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="$root/jquery/jquery-ui-1.8.9.custom.min.js"></script>
+<script type="text/javascript" src="$root/jquery/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="$root/jquery/jquery.ui.droppable.js"></script>
+<style type="text/css">
+    div.value {
+        position: absolute;
+        padding: 10px;
+        background-color: #ffffaa;
+        border: 1px solid gray;
+        width: 200px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    div.value.green {
+        background-color: #adff2f;
+    }
+
+    div.value.red {
+        background-color: #b22222;
+    }
+
+    td.droppable {
+        border: 2px solid gray;
+        margin: 2px;
+        height: 300px;
+        text-align: center;
+        vertical-align: middle;
+        font-size:large;
+
+    }
+
+</style>
+#end
+
+#section("content")
+<div style="font-weight:300;">
+<center>
+<h1>Whoops!</h1>
+<p style="width: 500px; font-size:large;">
+    We have all read the <a href="http://agilemanifesto.org/">Manifesto for Agile Software Development</a>. But
+    somehow we got it all wrong. Can you fix the Manifesto and save the world from the evils of Waterfall?
+</p>
+
+<div style="text-align center;font-size:x-large;margin: 20px">
+    <center>We are uncovering better ways of developing<br>
+        software by doing it and helping others do it.<br>
+        Through this work we have come to value:
+    </center>
+</div>
+
+
+    <form action="$root/agile/continue" method="POST" id="agileForm">
+        <input type="hidden" name="servletPath" value="${servletPath}"/>
+        <input type="submit" name="continue" id="continue" value="Now Continue Programming" style="visibility:hidden;">
+    </form>
+</center>
+</div>
+
+<div style="height:100px;margin-top:40px" id="values">
+    <div class="value">
+        Individuals and interactions
+    </div>
+
+    <div class="value over">
+        Processes and tools
+    </div>
+
+    <div class="value">
+        Working software
+    </div>
+
+    <div class="value over">
+        Comprehensive documentation
+    </div>
+    <div class="value">
+        Customer collaboration
+    </div>
+
+    <div class="value over">
+        Contract negotiation
+    </div>
+
+    <div class="value">
+        Responding to change
+    </div>
+
+    <div class="value over">
+        Following a plan
+    </div>
+
+</div>
+<table style="width:100%">
+
+    <tr>
+        <td class="droppable" width="50%">
+            (Move more important values here)
+        </td>
+        <td>
+            over
+        </td>
+        <td class="droppable over" width="50%">
+            (Move less important values here)
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var width = $("#values").outerWidth() - 150;
+
+        $("div.value").each(function() {
+            $(this).css("margin-top", (Math.round(Math.random() * 50 - 25)) + "px")
+            $(this).css("left", (Math.round(Math.random() * width)) + "px")
+            $(this).draggable()
+        })
+
+        $("td.droppable").each(function() {
+            $(this).droppable({
+                drop: function(event, ui) {
+                    if ($(this).hasClass("over") && $(ui.draggable).hasClass("over")) {
+                        $(ui.draggable).removeClass("red");
+                        $(ui.draggable).addClass("green");
+                    } else if (!$(this).hasClass("over") && !$(ui.draggable).hasClass("over")) {
+                        $(ui.draggable).removeClass("red");
+                        $(ui.draggable).addClass("green");
+                    } else {
+                        $(ui.draggable).removeClass("green");
+                        $(ui.draggable).addClass("red");
+                    }
+                    var allGreen = true;
+                    $("div.value").each(function() {
+                        if (!$(this).hasClass("green")) {
+                            allGreen = false
+                        }
+                    });
+                    if (allGreen) {
+                        alert("Yes! You're a true Agile Champion!")
+                        $("#continue").css("visibility", "visible")
+
+                    }
+                }
+            })
+
+            $("body").attr("background", "$root/agile/background.jpg")
+        })
+    })
+</script>
+#end
+
+#parse("/org/kantega/dogmaticmvc/web/templates/design.vm")

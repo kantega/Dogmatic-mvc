@@ -1,0 +1,17 @@
+#section("content")
+
+
+<h1>Not asserting much in your tests, huh?</h1>
+<p>
+We inserted some bugs in your class <code>${className}</code>.
+    Your tests did not catch these bugs.
+
+</p>
+<h2>How to fix?</h2>
+<p>
+    Please add some more assertions to your tests.
+</p>
+    
+#end
+
+#parse("design.vm")

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<s:Application
+        xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark"
+        xmlns:mx="library://ns.adobe.com/flex/mx" backgroundColor="#000000" creationComplete="init()">
+
+
+    <fx:Script>
+        <![CDATA[
+        import mx.core.FlexGlobals;
+        import mx.graphics.codec.PNGEncoder;
+        import mx.rpc.events.ResultEvent;
+        import mx.utils.Base64Encoder;
+
+        private function init():void {
+            videoPreview.attachCamera(Camera.getCamera())
+            ExternalInterface.addCallback("capture", capture);
+        }
+
+        private function capture():String {
+            var snapshot:BitmapData = new BitmapData(320, 240, true);
+            snapshot.draw(videoPreview)
+
+            var bytes:ByteArray = new PNGEncoder().encode(snapshot);
+
+            var b64encoder:Base64Encoder = new Base64Encoder();
+            b64encoder.encodeBytes(bytes);
+
+            return b64encoder.flush();
+        }
+        ]]>
+    </fx:Script>
+
+
+    <mx:VideoDisplay id="videoPreview" width="320" height="240"/>
+</s:Application>

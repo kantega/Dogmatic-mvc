@@ -1,0 +1,25 @@
+#section("content")
+<script type="text/javascript">
+    function toggleVisibility(id) {
+        var style = document.getElementById(id).style;
+        style.display = style.display == "none" ? "block" : "none"
+    }
+</script>
+<style type="text/css">
+    pre {
+        border: 1px solid black;
+        background-color:aliceblue;
+        padding: 5px
+    }
+</style>
+<h1>Found ${failures.size()} failing tests:</h1>
+#foreach($failure in $failures)
+<h2>#htmlescape($failure.description)</h2>
+At #htmlescape($exceptionTool.getFirstSourceMention($failure.exception))
+<pre>#htmlescape($failure.message)</pre>
+<a href="#" onclick="toggleVisibility('trace_$velocityCount');return false">Full exception trace > </a>
+<pre id="trace_$velocityCount" style="display:none;margin-left: 20px">#htmlescape($failure.trace)</pre>
+#end
+#end
+
+#parse("design.vm")

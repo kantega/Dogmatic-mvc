@@ -1,0 +1,78 @@
+#section("content")
+<style type="text/css">
+    td.linenum, td.timesrun{
+        padding-right: 2px;
+    }
+    td.content {
+        padding: 2px;
+        padding-left:7px
+    }
+    td.linenum, td.timesrun {
+        width: 2em;
+        text-align:right;
+    }
+    td.timesrun {
+        border-right:1px solid gray;
+    }
+    tr.notrun td.timesrun, tr.notrun td.linenum, tr.notrun td.content {
+        background-color:coral;
+    }
+    tr.run td.timesrun, tr.run td.linenum {
+        background-color:lightgreen;
+    }
+    tr.nocode td.timesrun, tr.nocode td.linenum {
+        background-color:lightgray;
+    }
+    td.linerun {
+        background-color:coral;
+        width: 2em;
+        text-align:right;
+    }
+
+</style>
+
+<h1>Test coverage is too low!</h1>
+<p>Your tests cover only $coveredLines of the $totalLines lines in the class <code>$className</code>.</p>
+
+<table>
+    <tr>
+        <td>Your coverage: </td>
+        <td style="color:red;text-align:right;">$coveragePercent %</td>
+    </tr>
+    <tr>
+        <td>Required coverage: </td>
+        <td style="color:green; text-align:right;">$requiredCoverage %</td>
+    </tr>
+</table>
+
+<p>
+    Please improve your tests and reload this page.
+</p>
+
+<table cellpadding="0" cellspacing="0">
+
+#foreach($line in $lines)
+    #if($line.timesrun == 0)
+    #set($class = "notrun")
+    #end
+    #if($line.timesrun > 0)
+    #set($class = "run")
+    #end
+    #if($line.timesrun < 0)
+    #set($class = "nocode")
+    #end
+    <tr class="$class">
+        <td class="linenum">$line.linenum</td>
+        <td class="timesrun">
+            #if($line.timesrun >= 0)
+            $line.timesrun
+            #end
+            
+        </td>
+        <td class="content"><pre>$line.content</pre></td>
+    </tr>
+
+#end
+#end
+
+#parse("design.vm")
